@@ -72,6 +72,3 @@ def request_failed(my_error):
     msg_error = "Lors de l'envoi du mail cette erreur est apparue :" + my_error
     return msg_error
 
-if __name__ == "__main__":
-    #getValuesFromDB()
-    app.run()
