@@ -26,6 +26,10 @@ jobs:
       with:
         envkey_GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
         envkey_GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        envkey_PG_DATABASE: ${{ secrets.PG_DATABASE }}
+        envkey_PG_HOST: ${{ secrets.PG_HOST }}
+        envkey_PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+        envkey_PG_USER: ${{ secrets.PG_USER }}
         file_name: .env
 
     - name: Build using AppService-Build
