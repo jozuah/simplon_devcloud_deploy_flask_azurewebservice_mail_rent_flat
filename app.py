@@ -18,7 +18,6 @@ logging.basicConfig(filename='my_log.txt', level=logging.DEBUG,format='%(asctime
 
 def connection_db ():
     try:
-        print("1")
         #J'utilise l'ip public Azure pour me connecter à ma VM et aller sur le PG dessus
         cnx = psycopg2.connect(host= os.getenv('PG_HOST'),
                             user= os.getenv('PG_USER'),
@@ -37,10 +36,10 @@ def getValuesFromDB():
         conn = connection_db()
         cursor = conn.cursor()
         logging.info("[FLASK] Successfully connect to db")
-        cursor.execute("select * from test;")
+        cursor.execute("select * from paruvendu;")
         myresult = cursor.fetchall()
-        for x in myresult:
-            print(x)
+        #for data in myresult:
+        #    print(data)
         logging.info("[FLASK] Successfully fetch database data") 
         return myresult
     except Exception as e :
@@ -54,9 +53,9 @@ def index():
 def search_bar():
     mail_user = request.form.get('search_bar_item')
     print("my address :", mail_user)
-
+    my_data = getValuesFromDB()
     my_msg = ((1,"a","bla"),(2,"b","blb"),(3,"c","blc"))
-    check_mail = sendMail(mail_user,my_msg)
+    check_mail = sendMail(mail_user,my_data)
     if check_mail == "success" :
         return request_success()
     else:
@@ -71,4 +70,8 @@ def request_success():
 def request_failed(my_error):
     msg_error = "Lors de l'envoi du mail cette erreur est apparue :" + my_error
     return msg_error
+
+#Tests en local
+#if __name__ == "__main__":
+#    app.run(host="0.0.0.0", port=3500, debug=True)
 

@@ -52,9 +52,10 @@ def table_data(my_tuple):
     row =""
     for i in range (len(my_tuple)):
         row +="<tr>"
-        row += f"<td>{my_tuple[i][0]}</td>"
         row += f"<td>{my_tuple[i][1]}</td>"
         row += f"<td>{my_tuple[i][2]}</td>"
+        row += f"<td>{my_tuple[i][3]}</td>"
+        row += f"<td>{my_tuple[i][4]}</td>"
         row += f"</tr>\n"
     return row
 
@@ -62,7 +63,7 @@ def htmlPage (my_tuple):
     header = """
     <html>
             <head>
-            <h1 style="color: #5e9ca0; text-align: center;">Annonces</h1>
+            <h1 style="color: #5e9ca0; text-align: left;">Annonces</h1>
             
             <style type="text/css">
                 table {
@@ -114,9 +115,10 @@ def htmlPage (my_tuple):
             <table>
             <thead>
                 <tr>
-                    <th>Value 1</th>
-                    <th>Value 2</th>
-                    <th>Value 3</th>
+                    <th>Type</th>
+                    <th>Lieu</th>
+                    <th>Loyer</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
