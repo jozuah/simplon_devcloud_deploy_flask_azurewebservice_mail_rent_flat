@@ -21,6 +21,13 @@ jobs:
       with:
         python-version: '3.8'
 
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+        envkey_GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        file_name: .env
+
     - name: Build using AppService-Build
       uses: azure/appservice-build@v2
       with:
