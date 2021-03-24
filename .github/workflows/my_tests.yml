@@ -1,12 +1,24 @@
-steps:
-- uses: actions/checkout@v2
-- name: Set up Python
-  uses: actions/setup-python@v2
-  with:
-    python-version: '3.x'
-- name: Install dependencies
-  run: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-- name: run tests
-  run: python3 tests.py
+name: Run de mes tests
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: run tests
+      run: python3 tests.py
