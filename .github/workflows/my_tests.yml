@@ -16,6 +16,18 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
+        
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+        envkey_GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        envkey_PG_DATABASE: ${{ secrets.PG_DATABASE }}
+        envkey_PG_HOST: ${{ secrets.PG_HOST }}
+        envkey_PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+        envkey_PG_USER: ${{ secrets.PG_USER }}
+        file_name: .env
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
