@@ -1,0 +1,35 @@
+- name: Config app flask
+  hosts: josh-host
+  become: yes
+  become_method: sudo
+  remote_user: josh-admin
+  tasks:
+    - name: Installation postgresql
+      apt:
+        name: 
+          - postgresql
+        state: latest
+
+    #Installation de la librairie pour linker le script python à psql
+    - name : Installation de psycopg2, flask, jinja2
+      apt:
+        name: 
+          - python-psycopg2
+          - python3-flask
+          - python3-jinja2
+        state: latest
+
+    - name: Create user psql
+      become: yes
+      become_user: postgres
+      postgresql_user:
+        name: "josh"
+        password: "pw"
+        role_attr_flags: "CREATEDB,NOSUPERUSER"
+
+    - name: Create database
+      become: yes
+      become_user: postgres
+      postgresql_db:
+          name: "rent_flat"
+          owner: "postgres"
