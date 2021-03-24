@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Python app to Azure Web App - jsuispassechezjosh
+name: Build,test and deploy Python app to Azure Web App - jsuispassechezjosh
 
 on:
   push:
@@ -31,6 +31,14 @@ jobs:
         envkey_PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
         envkey_PG_USER: ${{ secrets.PG_USER }}
         file_name: .env
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: run tests
+      run: python3 tests.py
 
     - name: Build using AppService-Build
       uses: azure/appservice-build@v2
