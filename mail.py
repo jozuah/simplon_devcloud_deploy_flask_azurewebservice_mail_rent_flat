@@ -46,18 +46,22 @@ def sendMail(mail_user,data_tuple):
         check_mail = str(e)
         return check_mail
 
-
 def table_data(my_tuple):
-    #initialisation du tableau
-    row =""
-    for i in range (len(my_tuple)):
-        row +="<tr>"
-        row += f"<td>{my_tuple[i][1]}</td>"
-        row += f"<td>{my_tuple[i][2]}</td>"
-        row += f"<td>{my_tuple[i][3]}</td>"
-        row += f"<td>{my_tuple[i][4]}</td>"
-        row += f"</tr>\n"
-    return row
+    try :
+        #initialisation du tableau
+        row =""
+        for i in range (len(my_tuple)):
+            row +="<tr>"
+            row += f"<td>{my_tuple[i][1]}</td>"
+            row += f"<td>{my_tuple[i][2]}</td>"
+            row += f"<td>{my_tuple[i][3]}</td>"
+            row += f"<td>{my_tuple[i][4]}</td>"
+            row += f"</tr>\n"
+        logging.info("[MAIL] Data has been put into table ")
+        #print(row)
+        return row
+    except (Exception,TypeError,smtplib.SMTPException) as e:
+        logging.warning("[MAIL]Fail to put data into mail to %s message error:  %s", e)
 
 def htmlPage (my_tuple):
     header = """

@@ -28,22 +28,29 @@ def connection_db ():
         logging.info("[FLASK] Successfully connected to your database") 
         return cnx
     except Exception as e:
-        logging.warning("[FLASK] message error:  %s", (e))
-    return cnx
+        logging.warning("[FLASK] Failed to connec to db, message error:  %s", (e))
+        error_message= "failed to connect"
+        print(error_message)
+        return error_message
 
-def getValuesFromDB():
+def getValuesFromDB(conn):
     try:       
-        conn = connection_db()
+        #conn = connection_db()
+        #print("ma connection :", conn)
+        #print("type :", type(conn))
         cursor = conn.cursor()
-        logging.info("[FLASK] Successfully connect to db")
         cursor.execute("select * from paruvendu;")
+        #mon_fetchall = cursor.fetchall()
+        #myresult = read(mon_fetchall)
         myresult = cursor.fetchall()
         #for data in myresult:
         #    print(data)
-        logging.info("[FLASK] Successfully fetch database data") 
+        logging.info("[FLASK] Successfully fetch database data")
+        #print(type(myresult)) 
         return myresult
     except Exception as e :
-        logging.warning("[FLASK] message error:  %s", (e))
+        logging.warning("[FLASK] Failed to get data from db, message error:  %s", (e))
+
 
 @app.route('/home')
 def index():
@@ -51,25 +58,38 @@ def index():
 
 @app.route('/home', methods=['POST'])
 def search_bar():
-    mail_user = request.form.get('search_bar_item')
-    print("my address :", mail_user)
-    my_data = getValuesFromDB()
-    my_msg = ((1,"a","bla"),(2,"b","blb"),(3,"c","blc"))
-    check_mail = sendMail(mail_user,my_data)
-    if check_mail == "success" :
-        return request_success()
-    else:
-        return request_failed(check_mail)
-    #return render_template("index.html")
+    try:
+        mail_user = request.form.get('search_bar_item')
+        print("my address :", mail_user)
+        my_data = getValuesFromDB(connection_db())
+        #my_msg = ((1,"a","bla"),(2,"b","blb"),(3,"c","blc"))
+        check_mail = sendMail(mail_user,my_data)
+        if check_mail == "success" :
+            logging.info("[FLASK] search_bar function => Successfully send email") 
+            return request_success()
+        else:
+            logging.info("[FLASK] search_bar function => Fail send email")
+            return request_failed(check_mail)
+        #return render_template("index.html")
+    except Exception as e :
+        logging.warning("[FLASK] message error:  %s", (e))
 
 @app.route('/success')
 def request_success():
-    return "Email has been successfully sent"
+    try:
+        logging.info("[FLASK] request_success function => Successfully go to page /success") 
+        return "Email has been successfully sent"
+    except Exception as e :
+        logging.warning("[FLASK] message error:  %s", (e))
 
 @app.route('/fail')
 def request_failed(my_error):
-    msg_error = "Lors de l'envoi du mail cette erreur est apparue :" + my_error
-    return msg_error
+    try:
+        msg_error = "Lors de l'envoi du mail cette erreur est apparue :" + my_error
+        logging.info("[FLASK] request_failed function => Successfully go to page /fail") 
+        return msg_error
+    except Exception as e :
+        logging.warning("[FLASK] message error:  %s", (e))
 
 #Tests en local
 #if __name__ == "__main__":
