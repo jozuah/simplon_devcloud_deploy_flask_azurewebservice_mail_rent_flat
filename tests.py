@@ -79,20 +79,20 @@ class Test_file(unittest.TestCase):
             #print(message_return)
             self.assertEqual(message_return, "success")
 
-    #5eme test mock => sendMail() fail 
-    def test_mail_sender_mock_fail(self):
-        #On va fake la partie sendmail() de smtplib
-        with patch("smtplib.SMTP_SSL.sendmail", create=True) as sendmail:
-            sendmail.side_effect = EOFError
-            #print("test_using_context_manager:", sendmail.call_args_list)
+    # #5eme test mock => sendMail() fail 
+    # def test_mail_sender_mock_fail(self):
+    #     #On va fake la partie sendmail() de smtplib
+    #     with patch("smtplib.SMTP_SSL.sendmail", create=True) as sendmail:
+    #         sendmail.side_effect = EOFError
+    #         #print("test_using_context_manager:", sendmail.call_args_list)
 
-            # Création des paramètres d'entrée de la fonction sendMail()
-            receiver = 'les.mechants@simplon.co'
-            message = ((1,"a","bla","bli","bli"),(2,"b","blb","bli","bli"),(3,"c","blc","bli","bli"))
-            message_return = sendMail(receiver,message)
-            print("mon message de retour :", message_return)
-            #je m'assure que mon message de retour n'est pas "success" qui a une longueur de 7 caractères
-            self.assertLess(len(message_return),7)
+    #         # Création des paramètres d'entrée de la fonction sendMail()
+    #         receiver = 'les.mechants@simplon.co'
+    #         message = ((1,"a","bla","bli","bli"),(2,"b","blb","bli","bli"),(3,"c","blc","bli","bli"))
+    #         message_return = sendMail(receiver,message)
+    #         print("mon message de retour :", message_return)
+    #         #je m'assure que mon message de retour n'est pas "success" qui a une longueur de 7 caractères
+    #         self.assertLess(len(message_return),7)
 
 if __name__ == '__main__':
     #Verbosity indique le nombre d'info que va retourner l'execution
