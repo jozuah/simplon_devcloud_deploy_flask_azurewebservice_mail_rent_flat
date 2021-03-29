@@ -67,8 +67,9 @@ class Test_file(unittest.TestCase):
     #4eme test mock => sendMail() renvoie la string de connection
     def test_mail_sender_mock(self):
         #On va fake la partie sendmail() de smtplib
-        with patch("smtplib.SMTP_SSL.sendmail", create=True) as sendmail:
-            sendmail("hoolla", "jalla", "ohyeah")
+        with patch("smtplib.SMTP_SSL", create=True) as my_stmp:
+            my_stmp.sendmail("hoolla", "jalla", "ohyeah")
+            my_stmp.login("lol","123")
             #print("test_using_context_manager:", sendmail.call_args_list)
 
             # Création des paramètres d'entrée de la fonction sendMail()
